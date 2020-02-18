@@ -3,7 +3,7 @@
 include('db.php');
 
 $naam = '';
-$sql = "SELECT * FROM login WHERE voornaam = '$voornaam'";
+$sql = "SELECT * FROM accounts WHERE gebruikersnaam = '$gebruikersnaam'";
 
 $result = mysqli_query($link, $sql);
 $hash = '';
