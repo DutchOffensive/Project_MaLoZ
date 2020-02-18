@@ -18,9 +18,15 @@
         <h1 id="pagina_titel">Register</h1>
 		<input type="text" required name="voornaam" placeholder="voornaam"/>
         <br><br>
-		<input type="number" required name="leerlingnummer" placeholder="leerlingnummer"/>
+		<input type="text" required name="tussenvoegsel" placeholder="tussenvoegsel"/>
 		<br><br>
-		<input type="number" required name="cohort" placeholder="cohort" />
+		<input type="text" required name="achternaam" placeholder="achternaam" />
+		<br><br>
+		<input type="number" required name="telefoonnummer" placeholder="telefoonnummer" />
+		<br><br>
+		<input type="text" required name="functie" placeholder="functie" />
+		<br><br>
+		<input type="text" required name="gebruikersnaam" placeholder="gebruikersnaam" />
 		<br><br>
 		<input type="password" required name="wachtwoord" placeholder="wachtwoord" />
 		<br><br>
@@ -35,23 +41,26 @@
 include("db.php");
 if(isset($_POST["submit"])){
 	$melding ="";
-    $voornaam = htmlspecialchars($_POST['voornaam']);
-	$leerlingnummer = htmlspecialchars($_POST['leerlingnummer']);
-	$cohort = htmlspecialchars($_POST['cohort']);
+	$voornaam = htmlspecialchars($_POST['voornaam']);
+	$tussenvoegsel = htmlspecialchars($_POST['tussenvoegsel']);
+	$achternaam = htmlspecialchars($_POST['achternaam']);
+	$telefoonnummer = htmlspecialchars($_POST['telefoonnummer']);
+	$functie = htmlspecialchars($_POST['functie']);
+	$gebruikersnaam = htmlspecialchars($_POST['gebruikersnaam']);
     $wachtwoord = htmlspecialchars($_POST['wachtwoord']);
 	$passwordHash = password_hash($wachtwoord, PASSWORD_DEFAULT);
 	echo strlen($passwordHash) ;
 
 	// Controleer of e-mail al bestaat (geen dubbele adressen)
-	$sql= "SELECT * FROM leerling WHERE leerlingnummer = ?";
+	$sql= "SELECT * FROM accounts WHERE gebruikersnaam = ?";
 	$stmt = $link1->prepare($sql);
 	$stmt->execute(array($leerlingnummer));
 	$resultaat = $stmt->fetch(PDO::FETCH_ASSOC);
 	if ($resultaat) {
-		$melding = "leerlingnummer geregistreerd";
+		$melding = "gebruikersnaam geregistreerd";
         print_r ($melding);
 	}else {
-		$sql = "INSERT INTO leerling (voornaam,cohort,leerlingnummer,wachtwoord)
+		$sql = "INSERT INTO accounts (voornaam,tussenvoegsel,achternaam,telefoonnummer,functie,gebruikersnaam,wachtwoord)
                             VALUES ('$voornaam','$cohort','$leerlingnummer','$passwordHash')";
 		$stmt= $link1->prepare($sql);
 		try {
