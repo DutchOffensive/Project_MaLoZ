@@ -4,13 +4,13 @@
 		<?php
 		include('db.php');
 		if (!empty($_POST['submit'])) {
-			$leerlingnummer = mysqli_real_escape_string($link, $_POST['leerlingnummer']);
+			$gebruikersnaam = mysqli_real_escape_string($link, $_POST['gebruikersnaam']);
 			$wachtwoord = mysqli_real_escape_string($link, $_POST['wachtwoord']);
 
 			// echo "$gebruikersnaam $wachtwoord";
 
 			// $wachtwoord = password_hash($wachtwoord, PASSWORD_DEFAULT);
-			$query = "SELECT * FROM leerling WHERE leerlingnummer = '$leerlingnummer'";
+			$query = "SELECT * FROM accounts WHERE gebruikersnaam = '$gebruikersnaam'";
 			// wachtwoord = '$wachtwoord' AND 
 			// echo '<br>' . $query . '<br>';
 			$result = mysqli_query($link, $query);
@@ -23,11 +23,11 @@
 				//echo '<br>' . $row["password"] . '<br>';
 				if (password_verify($wachtwoord, $row["wachtwoord"])) {
 					//echo 'Password is valid!';
-					$_SESSION['leerlingnummer'] = $row['leerlingnummer'];
-					$_SESSION['idleerling'] = $row['idleerling'];
+					$_SESSION['gebruikersnaam'] = $row['gebruikersnaam'];
+					$_SESSION['idaccounts'] = $row['idaccounts'];
 					echo '<script>window.location.href = "index.php"</script>;';
 				} else {
-					echo 'Invalid password. '  . $row["wachtwoord"];
+					echo 'Invalid password.';
 				}
 			} else {
 				//error
@@ -35,8 +35,8 @@
 		}
 		?>
 		<tr>
-			<td width="220"><b>Vul je leerlingnummer in</b></td>
-			<td width="150"><input type="text" name="leerlingnummer" value="" size="20" /></td>
+			<td width="220"><b>Vul je gebruikersnaam in</b></td>
+			<td width="150"><input type="text" name="gebruikersnaam" value="" size="20" /></td>
 		</tr>
 		<tr>
 			<td width="200"><b>Vul je wachtwoord in</b></td>
@@ -46,6 +46,6 @@
 			<td colspan="2"><input type="submit" name="submit" value="Inloggen" /></td>
 		</tr>
 	</table>
-	<p>Nog geen account <a href="register.php">Meld je aan</a>.</p>
-	<a href="index.php">terug naar home</a>
+	<p>Nog geen account <a href="?pagina=register">Meld je aan</a>.</p>
+	<a href="?pagina=index">terug naar home</a>
 </form>

@@ -2,7 +2,7 @@
 
 include('db.php');
 
-$naam = '';
+$gebruikersnaam = '';
 $sql = "SELECT * FROM accounts WHERE gebruikersnaam = '$gebruikersnaam'";
 
 $result = mysqli_query($link, $sql);

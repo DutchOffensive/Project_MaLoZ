@@ -19,7 +19,7 @@
 
 			<input class="btn btn-outline-success my-2 my-sm-0" type="submit" class="icon" id="submit" name="submit" value="Submit" />
 		</div>
-		<a class="btn btn-outline-danger my-2 my-sm-0" href="/index.php">Back</a>
+		<a class="btn btn-outline-danger my-2 my-sm-0" href="?pagina=login">Back</a>
 	</form>
 </div>
 <?php
@@ -38,8 +38,8 @@ if (isset($_POST["submit"])) {
 
 	// Controleer of e-mail al bestaat (geen dubbele adressen)
 	$sql = "SELECT * FROM accounts WHERE gebruikersnaam = ?";
-	$stmt = $link1->prepare($sql);
-	$stmt->execute(array($leerlingnummer));
+	$stmt = $link->prepare($sql);
+	$stmt->execute(array($gebruikersnaam));
 	$resultaat = $stmt->fetch(PDO::FETCH_ASSOC);
 	if ($resultaat) {
 		$melding = "gebruikersnaam geregistreerd";
@@ -47,7 +47,7 @@ if (isset($_POST["submit"])) {
 	} else {
 		$sql = "INSERT INTO accounts (voornaam,tussenvoegsel,achternaam,telefoonnummer,functie,gebruikersnaam,wachtwoord)
 						VALUES ('$voornaam','$tussenvoegsel','$achternaam','$telefoonnummer','$functie','$gebruikersnaam','$wachtwoord')";
-		$stmt = $link1->prepare($sql);
+		$stmt = $link->prepare($sql);
 		try {
 			$stmt->execute(
 				array(
