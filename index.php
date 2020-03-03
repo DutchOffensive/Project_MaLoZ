@@ -33,7 +33,7 @@
 <body>
     <nav class="navbar navbar-expand-md">
         <div class="collapse navbar-collapse mt-2" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav m-auto">
                 <li class="nav-item">
                     <a class="nav-link<?php if ($_GET['pagina'] == 'home') { ?> active<?php } ?>" href="index.php">Home</a>
                 </li>
