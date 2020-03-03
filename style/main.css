@@ -8,3 +8,136 @@ html, body {
 .row {
     margin: 0 !important;
 }
+
+a {
+    text-decoration: none !important;
+}
+
+.navbar { 
+    position: absolute !important;
+    width: 100%;
+    z-index: 10;
+}
+
+.navbar li {
+    padding: 0px 10px;
+}
+
+.navbar a {
+    font-weight: bold;
+    color: #000;
+}
+
+.nav-link.active {
+    color: #ff970f !important;
+    font-weight: 700 !important;
+}
+
+.nav-item a {
+    transition: 0.5s;
+}
+
+.nav-item a:hover {
+    color: #d07600 !important;
+}
+
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 5px;
+    margin: 6px 0;
+    transition: 0.5s;
+    border: 0px solid;
+    border-radius: 30px;
+    background-color: #000;
+}
+
+.menu {
+    font-size: 18px;
+    font-weight: bold;
+    padding-top: 9px;
+    padding-right: 10px;
+    transition: 0.5s;
+    color: #000;
+}
+  
+.change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-9px, 6px);
+    background-color: #fff !important;
+}
+  
+.change .bar2 {
+    opacity: 0;
+}
+  
+.change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
+    background-color: #fff !important;
+}
+
+.change .menu {
+    color: #fff !important;
+}
+
+.close-button {
+    position: absolute; 
+    z-index: 30; 
+    right: 10px; 
+    top: 25px;
+    color: #000;
+}
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 20;
+    top: 0;
+    right: 0;
+    background-color: #004996;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding-top: 90px;
+    transition: 0.5s;
+    color: #fff;
+}
+  
+.mobile-css {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    display: block;
+    transition: 0.3s;
+    min-width: 200px;
+    text-align: center;
+    width: 100px;
+    margin: auto;
+}
+  
+.sidebar a:hover {
+    color: #ff970f;
+}
+
+.activeMobile {
+    color: #ff970f !important;
+}
+  
+@media screen and (max-height: 450px) {
+    .sidebar {padding-top: 15px;}
+    .sidebar a {font-size: 18px;}
+}
+
+@media only screen and (max-width: 767px) {
+    .navbar-collapse {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 767px) {
+    .close-button {
+        display: none;
+    }
+}
