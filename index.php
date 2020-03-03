@@ -38,13 +38,8 @@
 					include('pages/unknown.php');
 				}
 			}	
-        ?>	
-
-        <script>
-			$(window).load(function() {
-		 		$("body").removeClass("preload");
-			});
-        </script>       
+        ?>
+        
     </body>
 
 </html>
