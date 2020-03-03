@@ -1,73 +1,102 @@
-<div class="content">
-	<form name="registeren" class="form" method="POST">
-		<h1 id="pagina_titel">Register</h1>
-		<input type="text" required name="voornaam" placeholder="voornaam" />
-		<br><br>
-		<input type="text" name="tussenvoegsel" placeholder="tussenvoegsel" />
-		<br><br>
-		<input type="text" required name="achternaam" placeholder="achternaam" />
-		<br><br>
-		<input type="number" required name="telefoonnummer" placeholder="telefoonnummer" />
-		<br><br>
-		<input type="text" required name="functie" placeholder="functie" />
-		<br><br>
-		<input type="text" required name="gebruikersnaam" placeholder="gebruikersnaam" />
-		<br><br>
-		<input type="password" required name="wachtwoord" placeholder="wachtwoord" />
-		<br><br>
-		<div class="icon_container">
-
-			<input class="btn btn-outline-success my-2 my-sm-0" type="submit" class="icon" id="submit" name="submit" value="Submit" />
-		</div>
-		<a class="btn btn-outline-danger my-2 my-sm-0" href="/index.php">Back</a>
-	</form>
-</div>
-<?php
-include("db.php");
-if (isset($_POST["submit"])) {
-	$melding = "";
-	$voornaam = htmlspecialchars($_POST['voornaam']);
-	$tussenvoegsel = htmlspecialchars($_POST['tussenvoegsel']);
-	$achternaam = htmlspecialchars($_POST['achternaam']);
-	$telefoonnummer = htmlspecialchars($_POST['telefoonnummer']);
-	$functie = htmlspecialchars($_POST['functie']);
-	$gebruikersnaam = htmlspecialchars($_POST['gebruikersnaam']);
-	$wachtwoord = htmlspecialchars($_POST['wachtwoord']);
-	$passwordHash = password_hash($wachtwoord, PASSWORD_DEFAULT);
-	echo strlen($passwordHash);
-
-	// Controleer of e-mail al bestaat (geen dubbele adressen)
-	$sql = "SELECT * FROM accounts WHERE gebruikersnaam = ?";
-	$stmt = $link1->prepare($sql);
-	$stmt->execute(array($leerlingnummer));
-	$resultaat = $stmt->fetch(PDO::FETCH_ASSOC);
-	if ($resultaat) {
-		$melding = "gebruikersnaam geregistreerd";
-		print_r($melding);
-	} else {
-		$sql = "INSERT INTO accounts (voornaam,tussenvoegsel,achternaam,telefoonnummer,functie,gebruikersnaam,wachtwoord)
-						VALUES ('$voornaam','$tussenvoegsel','$achternaam','$telefoonnummer','$functie','$gebruikersnaam','$wachtwoord')";
-		$stmt = $link1->prepare($sql);
-		try {
-			$stmt->execute(
-				array(
-					$voornaam,
-					$tussenvoegsel,
-					$achternaam,
-					$telefoonnummer,
-					$functie,
-					$gebruikersnaam,
-					$passwordHash,
-					0,
-					0
-				)
-			);
-			$melding = "Nieuw account aangemaakt.";
-		} catch (PDOException $e) {
-			$melding = "Kon geen account aanmaken.";
-			echo $e->getMessage();
-		}
-		echo "<div id='melding'>" . $melding . "</div>";
-	}
-}
-?>
+<?php  
+ $connect = mysqli_connect("localhost", "root", "", "maloz");  
+ session_start();  
+ if(isset($_SESSION["username"]))  
+ {  
+      header("location:entry.php");  
+ }  
+ if(isset($_POST["register"]))  
+ {  
+      if(empty($_POST["username"]) && empty($_POST["password"]))  
+      {  
+           echo '<script>alert("Both Fields are required")</script>';  
+      }  
+      else  
+      {  
+           $username = mysqli_real_escape_string($connect, $_POST["username"]);  
+           $password = mysqli_real_escape_string($connect, $_POST["password"]);  
+           $password = md5($password);  
+           $query = "INSERT INTO users (username, password) VALUES('$username', '$password')";  
+           if(mysqli_query($connect, $query))  
+           {  
+                echo '<script>alert("Registration Done")</script>';  
+           }  
+      }  
+ }  
+ if(isset($_POST["login"]))  
+ {  
+      if(empty($_POST["username"]) && empty($_POST["password"]))  
+      {  
+           echo '<script>alert("Both Fields are required")</script>';  
+      }  
+      else  
+      {  
+           $username = mysqli_real_escape_string($connect, $_POST["username"]);  
+           $password = mysqli_real_escape_string($connect, $_POST["password"]);  
+           $password = md5($password);  
+           $query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";  
+           $result = mysqli_query($connect, $query);  
+           if(mysqli_num_rows($result) > 0)  
+           {  
+                $_SESSION['username'] = $username;  
+                header("location:entry.php");  
+           }  
+           else  
+           {  
+                echo '<script>alert("Wrong User Details")</script>';  
+           }  
+      }  
+ }  
+ ?>  
+ <!DOCTYPE html>  
+ <html>  
+      <head>  
+           <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
+           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
+           <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
+      </head>  
+      <body>  
+           <br /><br />  
+           <div class="container" style="width:500px;">   
+                <br />  
+                <?php  
+                if(isset($_GET["action"]) == "login")  
+                {  
+                ?>  
+                <h3 align="center">Login</h3>  
+                <br />  
+                <form method="post">  
+                     <label>Enter Username</label>  
+                     <input type="text" name="username" class="form-control" />  
+                     <br />  
+                     <label>Enter Password</label>  
+                     <input type="password" name="password" class="form-control" />  
+                     <br />  
+                     <input type="submit" name="login" value="Login" class="btn btn-info" />  
+                     <br />  
+                     <p align="center"><a href="index.php">Register</a></p>  
+                </form>  
+                <?php       
+                }  
+                else  
+                {  
+                ?>  
+                <h3 align="center">Register</h3>  
+                <br />  
+                <form method="post">  
+                     <label>Enter Username</label>  
+                     <input type="text" name="username" class="form-control" />  
+                     <br />  
+                     <label>Enter Password</label>  
+                     <input type="password" name="password" class="form-control" />  
+                     <br />  
+                     <input type="submit" name="register" value="Register" class="btn btn-info" />  
+                     <br />  
+                     <p align="center"><a href="index.php?action=login">Login</a></p>  
+                </form>  
+                <?php  
+                }  
+                ?>  
+           </div>  
+      </body>  
+ </html> 

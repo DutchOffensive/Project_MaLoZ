@@ -1,0 +1,22 @@
+.margin-box{
+    margin-top: 50px;
+    margin-left:400px;
+    margin-right:400px;
+    text-align: center;
+}
+
+.list-box{
+    margin-top: 50px;
+    margin-left:200x;
+    margin-right:200px;
+    text-align: center;
+}
+
+body{
+    background-color: lightgray;
+    background-attachment: fixed;
+    background-image: url("images/background-edit.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
