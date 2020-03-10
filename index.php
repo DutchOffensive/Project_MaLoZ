@@ -38,7 +38,7 @@
                     <a class="nav-link<?php if ($_GET['pagina'] == 'home') { ?> active<?php } ?>" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link<?php if ($_GET['pagina'] == '') { ?> active<?php } ?>" href="?pagina=#">Meldingen</a>
+                    <a class="nav-link<?php if ($_GET['pagina'] == 'read_melding') { ?> active<?php } ?>" href="?pagina=read_melding">Meldingen</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link<?php if ($_GET['pagina'] == '') { ?> active<?php } ?>" href="?pagina=#">Accounts</a>
@@ -63,7 +63,7 @@
     </div>
     <div id="mySidebar" class="sidebar">
         <a href="index.php" class="mobile-css <?php if ($_GET['pagina'] == 'home') { ?> activeMobile<?php } ?>">Home</a>
-        <a href="?pagina=#" class="mobile-css <?php if ($_GET['pagina'] == '') { ?> activeMobile<?php } ?>">Meldingen</a>
+        <a href="?pagina=read_melding" class="mobile-css <?php if ($_GET['pagina'] == '') { ?> activeMobile<?php } ?>">Meldingen</a>
         <a href="?pagina=#" class="mobile-css <?php if ($_GET['pagina'] == '') { ?> activeMobile<?php } ?>">Accounts</a>
         <a href="?pagina=#" class="mobile-css <?php if ($_GET['pagina'] == '') { ?> activeMobile<?php } ?>">Inloggen</a>
     </div>
